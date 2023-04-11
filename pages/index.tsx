@@ -6,7 +6,7 @@ async function test() {
 export default function Home() {
   return (
     <div>
-      <button onClick={test}>
+      <button type="button" onClick={test}>
         test
       </button>
     </div>
