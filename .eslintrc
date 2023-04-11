@@ -17,6 +17,7 @@
         "error",
         {
           "extensions": [
+            ".ts",
             ".js",
             ".jsx",
             ".tsx"
@@ -30,12 +31,14 @@
     //_app.tsx jsx-props 에러 해결
     "react/jsx-props-no-spreading":0},
     "settings": {
-      "import/resolver": {
-        "node": {
-          "paths": ["./*"],
-          "extensions": [".js", ".jsx", ".ts", ".tsx"]
+        "import/resolver": {
+            "alias": [
+                ["@", "./*"]
+              ],
+          "node": {
+            "extensions": [".js", ".ts", ".d.ts", ".tsx"]
+          }
         }
-      }
     }
 }
 
