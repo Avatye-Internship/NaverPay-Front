@@ -1,19 +1,13 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import Axios from '../..';
 
-export default async function userHandler(
-  req: NextApiRequest,
-  res: NextApiResponse,
-) {
-  try {
-    const result = await Axios.patch('/api/users/find/pwd', {
-      email: 'ngm9464@gmail.com',
-      newPwd: '12345678',
-    });
-    console.log(result.data);
-    res.json(result.data);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
+import axios from "axios"
+import { NextApiRequest, NextApiResponse } from "next"
+
+export default async function findByPwd(req: NextApiRequest, res: NextApiResponse) {
+    try {
+        const result = await axios.patch(process.env.SERVER_API_URL+'/api/users/find/pwd', req.body)
+        res.send(result.data)
+    } catch (error) {
+        console.log('pwd.ts', error)
+    }
+    
 }
