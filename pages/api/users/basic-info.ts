@@ -1,5 +1,5 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function findUserBasicInfo(req: NextApiRequest, res: NextApiResponse) {
-    const result = await fetch('')
+  const result = await fetch('');
 }

@@ -15,19 +15,17 @@
 //       .then(res => res.json)
 //       .then(data => console.log(data));
 //     }
-  
+
 //     return <>
 //      <div>
 //   <button onClick={test}>
 //       test
 //     </button>
 //     </div>
-    
-//     </>
-   
-    
-//   }
 
+//     </>
+
+//   }
 
 // import { useEffect, useState } from "react";
 
