@@ -17,5 +17,6 @@ export default async function userHandler(req: NextApiRequest, res: NextApiRespo
     case 'PATCH':
       result = await fetch(`${basicUrl}/api/users`);
       break;
+    default:
   }
 }
