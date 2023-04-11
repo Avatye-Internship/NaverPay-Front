@@ -1,14 +1,14 @@
+import Axios from 'axios';
+
 async function test() {
-  await fetch('/api/users', { method: 'GET' })
-    .then((res) => res.json)
+  await Axios.patch('/api/users/find/pwd')
+    .then((res) => res.data)
     .then((data) => console.log(data));
 }
 export default function Home() {
   return (
     <div>
-      <button type="button" onClick={test}>
-        test
-      </button>
+      <button type="button" onClick={test}>test</button>
     </div>
   );
 }

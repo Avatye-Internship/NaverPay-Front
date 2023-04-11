@@ -8,7 +8,7 @@ export default async function userHandler(
   try {
     const result = await Axios.patch('/api/users/find/pwd', {
       email: 'ngm9464@gmail.com',
-      newPwd: '12345678',
+      newPwd: '123456789s',
     });
     console.log(result.data);
     res.json(result.data);
