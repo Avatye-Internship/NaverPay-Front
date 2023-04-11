@@ -1,0 +1,42 @@
+{
+    "root": true,
+    "extends": [
+      "airbnb",
+      "next",
+      "next/core-web-vitals",
+      "plugin:import/errors",
+      "plugin:import/warnings"
+    ],
+    "plugins": [
+      "import",
+      "react",
+      "react-hooks"
+    ],
+    "rules": {
+      "react/jsx-filename-extension": [
+        "error",
+        {
+          "extensions": [
+            ".js",
+            ".jsx",
+            ".tsx"
+          ]
+        }
+      ],
+      //import 에러 해결
+      "import/extensions": 0,
+    "import/prefer-default-export": 0,
+    "import/no-extraneous-dependencies": 0,
+    //_app.tsx jsx-props 에러 해결
+    "react/jsx-props-no-spreading":0},
+    "settings": {
+      "import/resolver": {
+        "node": {
+          "paths": ["./*"],
+          "extensions": [".js", ".jsx", ".ts", ".tsx"]
+        }
+      }
+    }
+}
+
+  

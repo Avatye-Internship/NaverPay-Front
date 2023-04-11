@@ -1,3 +1,4 @@
+
 import { NextApiRequest, NextApiResponse } from "next";
 import axios from 'axios';
 import { getCookie } from "@/src/cookie";
@@ -15,3 +16,4 @@ export default async function findUserBasicInfo(req: NextApiRequest, res: NextAp
         console.log(error)   
     }
 }
+

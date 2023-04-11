@@ -1,4 +1,3 @@
-
 import { NextApiRequest, NextApiResponse } from 'next';
 import axios from 'axios';
 import { setHeaders } from '../../../src/cookie';
@@ -40,3 +39,4 @@ export default async function userHandler(req: NextApiRequest, res: NextApiRespo
             break;
     }
 }
+
