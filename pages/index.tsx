@@ -6,22 +6,22 @@ import Axios from './api';
 const signUpBody = {
   nickname: 'test2',
   profileImg: 'ㅇㅇ',
-  email: 'test2@naver.com',
+  email: 'skarudals27@naver.com',
   pwd: '1111',
   name: '이름',
   gender: '여성',
   birth: '20011227',
   terms: [
     {
-      term_id: 4,
+      term_id: 1,
       is_agree: 1,
     },
     {
-      term_id: 5,
+      term_id: 2,
       is_agree: 1,
     },
     {
-      term_id: 6,
+      term_id: 3,
       is_agree: 1,
     },
   ],
@@ -38,8 +38,12 @@ const findPwdBody = {
 };
 
 const loginBody = {
-  email: 'test2@naver.com', // 아이디
+  email: 'skarudals27@naver.com', // 아이디
   pwd: '1111', // 비번
+};
+
+const productId = {
+  id: 1,
 };
 
 async function test() {
@@ -105,6 +109,26 @@ export default function Home() {
     return data;
   }
 
+  // 포인트 조회
+  async function findPoint() {
+    const data = await axios.get('/api/users/point').then((res) => console.log(res.data));
+    return data;
+  }
+  // 상품 id별 조회
+  async function findProductById() {
+    const data = await axios.get('/api/product/ads/1').then((res) => console.log(res.data));
+    return data;
+  }
+  // 카테고리별 상품 조회
+  async function findProductByCategory() {
+    const data = await axios.get('/api/product', { params: { category: 'card' } }).then((res) => console.log(res.data));
+    return data;
+  }
+  // 참여 상태 수정 및 포인트 적립
+  async function updatePointByStatus() {
+    const data = await axios.get('/api/product/ads/1/user-status').then((res) => console.log(res.data));
+    return data;
+  }
   return (
     <div>
       <button type="button" onClick={test}>test</button>
@@ -126,6 +150,22 @@ export default function Home() {
       <p />
       <button type="button" onClick={socialLogin}>
         소셜 로그인
+      </button>
+      <p />
+      <button type="button" onClick={findPoint}>
+        포인트 조회
+      </button>
+      <p />
+      <button type="button" onClick={findProductById}>
+        상품 id별 조회
+      </button>
+      <p />
+      <button type="button" onClick={findProductByCategory}>
+        상품 카테고리별 조회
+      </button>
+      <p />
+      <button type="button" onClick={updatePointByStatus}>
+        참여 상태 수정 및 포인트 적립
       </button>
       <div>
         <Link href="http://localhost:8000/api/users/login/kakao"><h1>소셜로그인 링크</h1></Link>
