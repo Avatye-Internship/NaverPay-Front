@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import axios from 'axios';
 import { setCookie } from '@/src/cookie';
-import Axios from './api';
 
 const signUpBody = {
   nickname: 'test2',
@@ -47,8 +46,8 @@ const productId = {
 };
 
 async function test() {
-  await Axios.patch('/api/users/find/pwd')
-    .then((res) => res.data)
+  await fetch('/api/users', { method: 'GET' })
+    .then((res) => res.json)
     .then((data) => console.log(data));
 }
 
@@ -74,6 +73,7 @@ export default function Home() {
     } catch (error) {
       console.log(error);
     }
+    return 1;
   }
   // 회원가입
   async function signUp() {
@@ -130,6 +130,7 @@ export default function Home() {
     return data;
   }
   return (
+
     <div>
       <button type="button" onClick={test}>test</button>
       <button type="button" onClick={findMyDetail}>
@@ -168,8 +169,36 @@ export default function Home() {
         참여 상태 수정 및 포인트 적립
       </button>
       <div>
-        <Link href="http://localhost:8000/api/users/login/kakao"><h1>소셜로그인 링크</h1></Link>
+        <Link href="/login">로그인페이지 링크</Link>
       </div>
-    </div>
+      <div>
+        <button type="button" onClick={findMyDetail}>
+          회원 정보 가져오기
+        </button>
+        <p />
+        <button type="button" onClick={findUserBasicInfo}>
+          회원 닉네임, 프로필 가져오기
+        </button>
+        <p />
+        <button type="button" onClick={signUp}>
+          회원가입
+        </button>
+        <p />
+        <button type="button" onClick={localLogin}>
+          로컬 로그인
+        </button>
+        <p />
+        <button type="button" onClick={socialLogin}>
+          소셜 로그인
+        </button>
+        <div>
+          <Link href="http://localhost:8000/api/users/login/kakao">소셜로그인 링크</Link>
+        </div>
+        <div>
+          <Link href="/test">테스트 페이지</Link>
+
+        </div>
+      </div>
+    </>
   );
 }
