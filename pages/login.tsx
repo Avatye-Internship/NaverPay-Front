@@ -129,7 +129,7 @@ function LoginPage() {
                 <Link href="/find-pwd" underline="none" color="gray">비밀번호 찾기</Link>
               </Grid>
               <Grid item>
-                <Link href="/signup" underline="none" color="gray">회원가입</Link>
+                <Link href="/sign-up" underline="none" color="gray">회원가입</Link>
               </Grid>
             </Grid>
           </Box>

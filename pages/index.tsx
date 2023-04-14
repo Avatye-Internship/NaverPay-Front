@@ -130,7 +130,6 @@ export default function Home() {
     return data;
   }
   return (
-
     <div>
       <button type="button" onClick={test}>test</button>
       <button type="button" onClick={findMyDetail}>
@@ -199,6 +198,6 @@ export default function Home() {
 
         </div>
       </div>
-    </>
+    </div>
   );
 }
