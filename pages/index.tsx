@@ -129,6 +129,7 @@ export default function Home() {
     const data = await axios.get('/api/product/ads/1/user-status').then((res) => console.log(res.data));
     return data;
   }
+
   return (
 
     <div>
@@ -195,10 +196,10 @@ export default function Home() {
           <Link href="http://localhost:8000/api/users/login/kakao">소셜로그인 링크</Link>
         </div>
         <div>
-          <Link href="/test">테스트 페이지</Link>
+          <Link href="/heesootest">테스트 페이지</Link>
 
         </div>
       </div>
-    </>
+    </div>
   );
 }
