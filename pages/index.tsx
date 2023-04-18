@@ -1,3 +1,15 @@
+// import React from 'react';
+// import ReactDOM from 'react-dom';
+// import { BrowserRouter } from 'react-router-dom';
+// import App from './App';
+
+// ReactDOM.render(
+//   <BrowserRouter>
+//     <App />
+//   </BrowserRouter>,
+//   document.getElementById('root'),
+// );
+
 import Link from 'next/link';
 import axios from 'axios';
 import { setCookie } from '@/src/cookie';
@@ -8,7 +20,7 @@ const signUpBody = {
   email: 'skarudals27@naver.com',
   pwd: '1111',
   name: '이름',
-  gender: '여성',
+  gender: null,
   birth: '20011227',
   terms: [
     {
@@ -95,7 +107,7 @@ export default function Home() {
 
   // 이메일 유효성 인증
   async function checkEmail() {
-    const data = await axios.post('/api/users/check/email', { email: 'ddddd' });
+    const data = await axios.post('/api/users/check/email', { email: 'ngm9464@gmail.com' });
     return data;
   }
   // 비밀번호 찾기
@@ -190,6 +202,9 @@ export default function Home() {
         <p />
         <button type="button" onClick={socialLogin}>
           소셜 로그인
+        </button>
+        <button type="button" onClick={checkEmail}>
+          이메일 유효성 인증
         </button>
         <div>
           <Link href="http://localhost:8000/api/users/login/kakao">소셜로그인 링크</Link>
