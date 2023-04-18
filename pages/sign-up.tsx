@@ -34,7 +34,6 @@ interface SignUpForm extends TermsForm{
   birth: string;
   gender: string;
   nickname: string;
-  profile_img: string;
 }
 
 // 테마 색상을 변경
@@ -74,7 +73,7 @@ export default function SignUp() {
   const [useCheck, setUseCheck] = React.useState(false);
   const [infoCheck, setInfoCheck] = React.useState(false);
   const [marketingCheck, setMarketingCheck] = React.useState(false);
-  
+
   const handleChange = (event: SelectChangeEvent) => {
     setGender(event.target.value as string);
   };

@@ -131,7 +131,6 @@ export default function Home() {
   }
 
   return (
-
     <div>
       <button type="button" onClick={test}>test</button>
       <button type="button" onClick={findMyDetail}>

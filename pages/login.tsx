@@ -133,18 +133,17 @@ function LoginPage() {
                 <Button type="submit" variant="contained" fullWidth sx={{ mt: 3, mb: 3, height: 50 }} style={{ fontSize: '18px', fontWeight: 'bolder', backgroundColor: '#03c75a' }}>로그인</Button>
               </Box>
 
-            </Paper>
-            <Box sx={{
-              display: 'flex',
-            }}
-            >
-              <Grid container justifyContent="center" alignItems="center" spacing={4}>
-                <Grid item>
-                  <Link href="/find-pwd" underline="none" color="gray">비밀번호 찾기</Link>
-                </Grid>
-                <Grid item>
-                  <Link href="/signup" underline="none" color="gray">회원가입</Link>
-                </Grid>
+          </Paper>
+          <Box sx={{
+            display: 'flex',
+          }}
+          >
+            <Grid container justifyContent="center" alignItems="center" spacing={4}>
+              <Grid item>
+                <Link href="/find-pwd" underline="none" color="gray">비밀번호 찾기</Link>
+              </Grid>
+              <Grid item>
+                <Link href="/sign-up" underline="none" color="gray">회원가입</Link>
               </Grid>
             </Box>
           </Box>
