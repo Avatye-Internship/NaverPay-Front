@@ -6,6 +6,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
   Accordion, AccordionDetails, AccordionSummary, Avatar, Box, IconButton, Typography,
 } from '@mui/material';
+import Product from './product';
 
 const StyledAccordion = styled(Accordion)(() => ({
   paddingTop: '5px',
@@ -51,7 +52,7 @@ export default function Main() {
         <MainHeader />
       </div>
       <hr />
-      <div >
+      <div>
         {/* 포인트 박스 */}
         <PointBox />
         <Grid container spacing={3} mt={3} direction="column" justifyContent="center" alignItems="center">

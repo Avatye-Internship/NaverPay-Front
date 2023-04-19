@@ -11,7 +11,7 @@ export default async function findProductById(req: NextApiRequest, res: NextApiR
     console.log(`${basicUrl}/api/product?category=${category}`);
     const result = await axios.get(`${basicUrl}/api/product?category=${category}`, { headers: setHeaders(req.cookies.accessToken) })
       .then((data) => data.data);
-    return res.send(result.data);
+    return res.send(result);
   } catch (error) {
     console.log(error);
   }
