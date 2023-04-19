@@ -4,13 +4,14 @@ import {
   AccordionDetails,
   AccordionSummary,
   Avatar,
-  Box, Button, Container, Divider, Grid, IconButton, List, ListItem, ListItemText, Paper, Typography,
+  Box, Button, Container, Divider, Grid, IconButton, List, ListItem, ListItemButton, ListItemText, Paper, Typography,
 } from '@mui/material';
 import { makeStyles, styled } from '@mui/material/styles';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import axios from 'axios';
 import MainHeader from '@/src/component/MainHeader';
 import PointBox from '@/src/component/PointBox';
+import { useRouter } from 'next/router';
 
 const StyledAccordion = styled(Accordion)(() => ({
   paddingTop: '5px',
@@ -33,13 +34,14 @@ function ExpandCustomIcon() {
 }
 
 function ProductList(props: { data: any; cnt: any;}) {
+  const router = useRouter()
   const { data, cnt } = props;
   return (
     <List>
       {Array.isArray(data) && data.map((item : any, index: number) => (
         <React.Fragment key={item.product_id}>
           { index < cnt && (
-            <ListItem>
+            <ListItem onClick={() => router.push(`/product/ads/${item.product_id}`) }>
               <Avatar alt="이미지 설명" src={item.main_img} style={{ width: '70px', height: '70px' }} />
               <ListItemText primary={item.name} primaryTypographyProps={{ fontWeight: '700' }} secondary={item.description} />
               <ListItemText
@@ -67,7 +69,6 @@ function CustomAccordion(props) {
   const handleSubmit = async (category) => {
     try {
       const response = await axios.get(`/api/product?category=${category}`);
-      console.log(category);
       console.log(response.data);
       console.log(response.status);
       if (response.data.statusCode === 200) {
