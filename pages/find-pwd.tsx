@@ -15,17 +15,11 @@ import HttpsOutlinedIcon from '@mui/icons-material/HttpsOutlined';
 import { useForm, Controller } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { ThemeProvider, createTheme, easing } from '@mui/material/styles';
 import * as React from 'react';
 import naverlogo from '../src/images/naver-logo.png';
 import { theme } from './login';
 
-// const validationSchema = yup.object().shape({
-//   email: yup.string().required('이메일을 입력해주세요').email('이메일 형식이 올바르지 않습니다.'),
-//   password: yup.string().required('비밀번호를 입력해주세요').matches(/^[A-Za-z0-9]{8,15}$/, '영어와 숫자를 조합해 8~15자로 입력해주세요'),
-//   emailCode: yup.string().required('인증번호를 입력해주세요'),
-//   passwordConfirm: yup.string().required('비밀번호를 입력해주세요').oneOf([yup.ref('password')], '비밀번호가 일치하지 않습니다.'),
-// });
 function TestPage() {
   const router = useRouter();
   // 이메일, 인증코드, 비밀번호, 비밀번호 확인
@@ -45,7 +39,7 @@ function TestPage() {
   const [emailValid, setEmailValid] = useState(true);
   const [emailCodeValid, setEmailCodeValid] = useState(true);
   const [pwdValid, setPwdValid] = useState(true);
-  const [pwdConfirmValid, setPwdConfirmValid] = useState(false); // 비번 같은지 검사
+  const [pwdConfirmValid, setPwdConfirmValid] = useState(true); // 비번 같은지 검사
 
   // 이메일
   const onEmailHandler = (e : React.ChangeEvent<HTMLInputElement>) => {
@@ -75,6 +69,7 @@ function TestPage() {
 
   // 이메일 코드 같은지 검사
   const onEmailCodeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(realCode);
     const emailCodeCurr = e.target.value;
     setEmailCode(emailCodeCurr);
     if (realCode === emailCodeCurr) {
@@ -98,13 +93,10 @@ function TestPage() {
   };
 
   // 이메일 발송
-  const clickCodeSendBtn = async (e) => {
+  const clickCodeSendBtn = async (e : React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    const response = await axios.post('/api/users/check/email-pwd', { email }).then((res) => {
-      console.log(res.data);
-      return res.data;
-    });
-    if (response.statusCode === 200) {
+    const response = await axios.post('/api/users/check/email-pwd', { email }).then((res) => res.data);
+    if (response.statusCode === 201) {
       setRealCode(response.data.verificationCode);
     } else if (response.statusCode === 401) {
       alert(response.message);
@@ -112,19 +104,25 @@ function TestPage() {
     }
   };
 
-  // const onSubmit = async (e) => {
-  //   const response = await axios.patch('/api/users/find/pwd', { email, pwd });
-  //   if (response.data.statusCode === 200) {
-  //     alert('비밀번호 변경에 성공했습니다.');
-  //     router.push('/login');
-  //   } else {
-  //     alert('이전 비밀번호와 일치합니다. 다른 비밀번호를 입력해주세요');
-  //     setPwd('');
-  //     setPwdConfirm('');
-  //     setPwdValid(false);
-  //     setPwdSameValid(false);
-  //   }
-  // };
+  const onSubmit = async () => {
+    if (email.length > 0 && emailCode.length > 0 && pwd.length > 0 && pwd.length > 0) {
+      if (emailValid && emailCodeValid && pwdValid && pwdConfirmValid) {
+        const response = await axios.patch('/api/users/find/pwd', { email, newPwd: pwd });
+        if (response.data.statusCode === 200) {
+          alert('비밀번호 변경에 성공했습니다.');
+          router.push('/login');
+        } else {
+          alert('이전 비밀번호와 일치합니다. 다른 비밀번호를 입력해주세요');
+          setPwd('');
+          setPwdConfirm('');
+        }
+      } else {
+        alert('입력값이 유효하지 않습니다');
+      }
+    } else {
+      alert('양식을 모두 채워주세요');
+    }
+  };
 
   return (
     <div>
@@ -147,7 +145,7 @@ function TestPage() {
             </Box>
             <Box>
               <Typography sx={{ fontWeight: 'bold' }} variant="body1" color="text.primary" align="left">이메일 인증</Typography>
-              <Grid container spacing={2} sx={{ mt: -1 }} component="form" onSubmit={clickCodeSendBtn}>
+              <Grid container spacing={2} sx={{ mt: -1 }}>
                 <Grid item xs={8}>
                   <TextField
                     onChange={onEmailHandler}
@@ -156,6 +154,8 @@ function TestPage() {
                     fullWidth
                     required
                     placeholder="이메일"
+                    autoComplete="email"
+                    name="email"
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
@@ -164,16 +164,14 @@ function TestPage() {
                       ),
                     }}
                   />
-
                 </Grid>
                 <Grid item xs={4}>
-                  <Button type="button" variant="contained" color="success" fullWidth sx={{ height: 56 }} style={{ fontSize: '14px', fontWeight: 'bolder', backgroundColor: '#03c75a' }}>인증번호 받기</Button>
+                  <Button type="button" onClick={clickCodeSendBtn} variant="contained" color="success" fullWidth sx={{ height: 56 }} style={{ fontSize: '14px', fontWeight: 'bolder', backgroundColor: '#03c75a' }}>인증번호 받기</Button>
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    value={emailCode}
                     error={emailCodeValid !== true}
-                    helperText={emailCodeValid !== true ? '인증코드가 일치하지 않습니다' : ''}
+                    helperText={emailCodeValid !== true ? emailCodeErr : ''}
                     fullWidth
                     onChange={onEmailCodeHandler}
                     required
@@ -191,7 +189,9 @@ function TestPage() {
               <Grid container spacing={3} sx={{ mt: -1 }}>
                 <Grid item xs={12}>
                   <TextField
-
+                    onChange={onPwdHandler}
+                    error={pwdValid !== true}
+                    helperText={pwdValid !== true ? pwdErr : ''}
                     fullWidth
                     required
                     type="password"
@@ -204,13 +204,15 @@ function TestPage() {
                       ),
                     }}
                   />
-
                 </Grid>
                 <Grid item xs={12}>
-
                   <TextField
+                    onChange={onPwdConfirmHandler}
+                    error={pwdConfirmValid !== true}
+                    helperText={pwdConfirmValid !== true ? pwdConfirmErr : ''}
                     required
                     fullWidth
+                    type="password"
                     placeholder="새로운 비밀번호 확인"
                     InputProps={{
                       startAdornment: (
@@ -223,7 +225,7 @@ function TestPage() {
                 </Grid>
               </Grid>
             </Box>
-            <Button type="submit" variant="contained" color="success" fullWidth sx={{ mt: 3, mb: 3, height: 56 }} style={{ fontSize: '18px', fontWeight: 'bolder', backgroundColor: '#03c75a' }}>비밀번호 변경하기</Button>
+            <Button type="submit" onClick={onSubmit} variant="contained" color="success" fullWidth sx={{ mt: 3, mb: 3, height: 56 }} style={{ fontSize: '18px', fontWeight: 'bolder', backgroundColor: '#03c75a' }}>비밀번호 변경하기</Button>
           </Box>
         </Container>
       </ThemeProvider>
