@@ -5,7 +5,6 @@ import { setHeaders } from '@/src/cookie';
 const basicUrl = process.env.SERVER_API_URL;
 
 export default async function findProductById(req: NextApiRequest, res: NextApiResponse) {
-  console.log(req.cookies);
   try {
     const { category } = req.query;
     console.log(`${basicUrl}/api/product?category=${category}`);
