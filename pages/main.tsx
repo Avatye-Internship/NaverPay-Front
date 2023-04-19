@@ -1,12 +1,21 @@
+import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore, { Navigation, Pagination } from 'swiper';
+// import 'swiper/swiper.scss';
+// import 'swiper/components/navigation/navigation.scss';
+// import 'swiper/components/pagination/pagination.scss';
 import PointBox from '@/src/component/PointBox';
 import MainHeader from '@/src/component/MainHeader';
 import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
 import {
-  Accordion, AccordionDetails, AccordionSummary, Avatar, Box, IconButton, Typography,
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Avatar, Box, Button, IconButton, List, ListItem, ListItemText, SwipeableDrawer, Typography,
 } from '@mui/material';
-import Product from './product';
+import { useState } from 'react';
 
 const StyledAccordion = styled(Accordion)(() => ({
   paddingTop: '5px',
@@ -44,6 +53,7 @@ function CustomAccordion() {
   );
 }
 
+SwiperCore.use([Navigation, Pagination]);
 export default function Main() {
   return (
     <div>
@@ -55,6 +65,20 @@ export default function Main() {
       <div>
         {/* 포인트 박스 */}
         <PointBox />
+        <div>
+          <Swiper
+            className="banner"
+            spaceBetween={50}
+            slidesPerView={1}
+            navigation
+            pagination={{ clickable: true }}
+          >
+            <SwiperSlide>Slide 1</SwiperSlide>
+            <SwiperSlide>Slide 2</SwiperSlide>
+            <SwiperSlide>Slide 3</SwiperSlide>
+            <SwiperSlide>Slide 4</SwiperSlide>
+          </Swiper>
+        </div>
         <Grid container spacing={3} mt={3} direction="column" justifyContent="center" alignItems="center">
           <Grid item xs={12}>
             <CustomAccordion />
