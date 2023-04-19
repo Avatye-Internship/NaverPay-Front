@@ -4,13 +4,14 @@ import {
   AccordionDetails,
   AccordionSummary,
   Avatar,
-  Box, Button, Container, Divider, Grid, IconButton, List, ListItem, ListItemText, Paper, Typography,
+  Box, Button, Container, Divider, Grid, IconButton, List, ListItem, ListItemText, Paper, SwipeableDrawer, Typography,
 } from '@mui/material';
-import { makeStyles, styled } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import axios from 'axios';
 import MainHeader from '@/src/component/MainHeader';
 import PointBox from '@/src/component/PointBox';
+import SwiperComponent from './swiper';
 
 const StyledAccordion = styled(Accordion)(() => ({
   paddingTop: '5px',
@@ -212,20 +213,25 @@ export default function Product() {
           </a>
         </Box>
         { category === 'all' && (
-        <Grid container spacing={2} mt={1} direction="column" justifyContent="center" alignItems="center">
-          <Grid item xs={12}>
-            <CustomAccordion {...cardProps} />
-          </Grid>
-          <Grid item xs={12}>
-            <CustomAccordion {...shoppingProps} />
-          </Grid>
-          <Grid item xs={12}>
-            <CustomAccordion {...quickrewardProps} />
-          </Grid>
-          <Grid item xs={12}>
-            <CustomAccordion {...joinProps} />
-          </Grid>
-        </Grid>
+          <>
+            <Paper variant="elevation" sx={{ my: { xs: 3 }, p: { xs: 3 } }} style={{ borderRadius: '10px' }}>
+              <SwiperComponent data={data} />
+            </Paper>
+            <Grid container spacing={1.5} mt={1} direction="column" justifyContent="center" alignItems="center">
+              <Grid item xs={12}>
+                <CustomAccordion {...cardProps} />
+              </Grid>
+              <Grid item xs={12}>
+                <CustomAccordion {...shoppingProps} />
+              </Grid>
+              <Grid item xs={12}>
+                <CustomAccordion {...quickrewardProps} />
+              </Grid>
+              <Grid item xs={12}>
+                <CustomAccordion {...joinProps} />
+              </Grid>
+            </Grid>
+          </>
         ) }
         <Paper variant="elevation" sx={{ my: { xs: 5 }, p: { xs: 1 } }} style={{ borderRadius: '10px' }}>
           <ProductList data={data} cnt={data.length} />
