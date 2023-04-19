@@ -13,12 +13,13 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Image from 'next/image';
-import { FormHelperText } from '@mui/material';
+import { useRouter } from 'next/router';
+import axios from 'axios';
 
 interface TermsForm{
   term1: boolean;
@@ -68,15 +69,13 @@ function Copyright(props: any) {
 }
 
 export default function SignUp() {
-  const [gender, setGender] = React.useState('');
-  const [allCheck, setAllCheck] = React.useState(false);
-  const [useCheck, setUseCheck] = React.useState(false);
-  const [infoCheck, setInfoCheck] = React.useState(false);
-  const [marketingCheck, setMarketingCheck] = React.useState(false);
-
-  const handleChange = (event: SelectChangeEvent) => {
-    setGender(event.target.value as string);
-  };
+  // const [allCheck, setAllCheck] = React.useState(false);
+  // const [useCheck, setUseCheck] = React.useState(false);
+  // const [infoCheck, setInfoCheck] = React.useState(false);
+  // const [marketingCheck, setMarketingCheck] = React.useState(false);
+  const [email, setEmail] = React.useState('');
+  // const [emailCode, setEmailCode] = React.useState('');
+  const [realCode, setRealCode] = React.useState('');
 
   const SignupSchema = yup.object().shape({
     email: yup.string().email('이메일 형식에 맞지 않습니다.').required('필수 정보입니다.'),
@@ -106,62 +105,77 @@ export default function SignUp() {
     handleSubmit,
     formState: { errors },
     // formState,
-    setError, clearErrors,
+    // setError, clearErrors,
   } = methods;
 
-  const allBtnEvent = () => { // 전체 동의
-    if (allCheck === false) {
-      setAllCheck(true);
-      setInfoCheck(true);
-      setUseCheck(true);
-      setMarketingCheck(true);
-      // clearErrors('term1');
-      // clearErrors('term2');
-    } else {
-      setAllCheck(false);
-      setInfoCheck(false);
-      setUseCheck(false);
-      setMarketingCheck(false);
-      // setError('term1', { message: '이용약관에 동의해야 합니다.' });
-      // setError('term2', { message: '개인정보 수집 및 이용에 동의해야 합니다.' });
+  // 이메일 발송
+  const clickCodeSendBtn = async () => {
+    const response = await axios.post('/api/users/check/email', { email }).then((res) => {
+      console.log(res.data);
+      return res.data;
+    });
+    if (response.statusCode === 200) {
+      setRealCode(response.data.verificationCode);
+      console.log(typeof realCode);
+    } else if (response.statusCode === 401) {
+      alert(response.message);
+      setEmail('');
     }
   };
 
-  const useBtnEvent = () => {
-    if (useCheck === false) {
-      setUseCheck(true);
-      // clearErrors('term1');
-    } else {
-      setUseCheck(false);
-      // setError('term1', { message: '이용약관에 동의해야 합니다.' });
-    }
-  };
+  // const allBtnEvent = () => { // 전체 동의
+  //   if (allCheck === false) {
+  //     setAllCheck(true);
+  //     setInfoCheck(true);
+  //     setUseCheck(true);
+  //     setMarketingCheck(true);
+  //     // clearErrors('term1');
+  //     // clearErrors('term2');
+  //   } else {
+  //     setAllCheck(false);
+  //     setInfoCheck(false);
+  //     setUseCheck(false);
+  //     setMarketingCheck(false);
+  //     // setError('term1', { message: '이용약관에 동의해야 합니다.' });
+  //     // setError('term2', { message: '개인정보 수집 및 이용에 동의해야 합니다.' });
+  //   }
+  // };
 
-  const infoBtnEvent = () => {
-    if (infoCheck === false) {
-      setInfoCheck(true);
-      // clearErrors('term2');
-    } else {
-      setInfoCheck(false);
-      // setError('term2', { message: '개인정보 수집 및 이용에 동의해야 합니다.' });
-    }
-  };
+  // const useBtnEvent = () => {
+  //   if (useCheck === false) {
+  //     setUseCheck(true);
+  //     // clearErrors('term1');
+  //   } else {
+  //     setUseCheck(false);
+  //     // setError('term1', { message: '이용약관에 동의해야 합니다.' });
+  //   }
+  // };
 
-  const marketingBtnEvent = () => {
-    if (marketingCheck === false) {
-      setMarketingCheck(true);
-    } else {
-      setMarketingCheck(false);
-    }
-  };
+  // const infoBtnEvent = () => {
+  //   if (infoCheck === false) {
+  //     setInfoCheck(true);
+  //     // clearErrors('term2');
+  //   } else {
+  //     setInfoCheck(false);
+  //     // setError('term2', { message: '개인정보 수집 및 이용에 동의해야 합니다.' });
+  //   }
+  // };
 
-  React.useEffect(() => {
-    if (infoCheck === true && useCheck === true && marketingCheck === true) {
-      setAllCheck(true);
-    } else {
-      setAllCheck(false);
-    }
-  }, [infoCheck, useCheck, marketingCheck]);
+  // const marketingBtnEvent = () => {
+  //   if (marketingCheck === false) {
+  //     setMarketingCheck(true);
+  //   } else {
+  //     setMarketingCheck(false);
+  //   }
+  // };
+
+  // React.useEffect(() => {
+  //   if (infoCheck === true && useCheck === true && marketingCheck === true) {
+  //     setAllCheck(true);
+  //   } else {
+  //     setAllCheck(false);
+  //   }
+  // }, [infoCheck, useCheck, marketingCheck]);
 
   // const {
   //   register,
@@ -172,9 +186,41 @@ export default function SignUp() {
   //   reValidateMode: 'onChange',
   //   resolver: yupResolver(SignupSchema),
   // });
-
-  const submitForm: SubmitHandler<SignUpForm> = (data: any) => console.log(data);
-
+  const router = useRouter();
+  const submitForm: SubmitHandler<SignUpForm> = async (data: any) => {
+    const signUpBody = {
+      nickname: data.nickname,
+      email: data.email,
+      pwd: data.pwd,
+      name: data.name,
+      gender: data.gender === '' ? null : data.gender,
+      birth: data.birth,
+      terms: [
+        {
+          term_id: 1,
+          is_agree: data.term1,
+        },
+        {
+          term_id: 2,
+          is_agree: data.term2,
+        },
+        {
+          term_id: 3,
+          is_agree: data.term3,
+        },
+      ],
+    };
+    const response = await axios.post('/api/users', signUpBody)
+      .then((res) => res.data);
+    if (response.statusCode === 201) {
+      alert('회원가입에 성공했습니다.');
+      router.push('/');
+    } else {
+      alert('회원가입에 실패하였습니다.');
+      router.push('/sign-up');
+    }
+    console.log(data);
+  };
   // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
   //   event.preventDefault(); // form 전송
   //   const data = new FormData(event.currentTarget);
@@ -198,8 +244,8 @@ export default function SignUp() {
         >
           <Image src="/MicrosoftTeams-image.png" priority alt="naver" width={165} height={35} />
           <Box component="form" onSubmit={handleSubmit(submitForm)} sx={{ mt: 5 }}>
-            <Grid container spacing={3}>
-              <Grid item xs={12}>
+            <Grid container spacing={3} sx={{ mt: -1 }}>
+              <Grid item xs={8}>
                 <Controller
                   control={control}
                   name="email"
@@ -215,6 +261,9 @@ export default function SignUp() {
                     />
                   )}
                 />
+              </Grid>
+              <Grid item xs={4}>
+                <Button type="submit" variant="contained" color="success" fullWidth sx={{ height: 56 }} style={{ fontSize: '14px', fontWeight: 'bolder', backgroundColor: '#03c75a' }} onClick={clickCodeSendBtn}>인증번호 받기</Button>
               </Grid>
               <Grid item xs={12}>
                 <Controller
@@ -293,18 +342,19 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12}>
                 <FormControl fullWidth>
-                  <InputLabel id="gender">성별</InputLabel>
-                  <Select
-                    labelId="gender"
-                    id="gender"
-                    value={gender}
-                    label="성별"
-                    onChange={handleChange}
-                  >
-                    <MenuItem value="성별">성별</MenuItem>
-                    <MenuItem value="여성">여성</MenuItem>
-                    <MenuItem value="남성">남성</MenuItem>
-                  </Select>
+                  <InputLabel id="gender-label">성별</InputLabel>
+                  <Controller
+                    name="gender"
+                    control={control}
+                    defaultValue=""
+                    render={({ field }) => (
+                      <Select {...field} labelId="gender-label" label="성별" placeholder="성별">
+                        <MenuItem value="">성별</MenuItem>
+                        <MenuItem value="남성">남성</MenuItem>
+                        <MenuItem value="여성">여성</MenuItem>
+                      </Select>
+                    )}
+                  />
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
@@ -327,11 +377,6 @@ export default function SignUp() {
                 />
               </Grid>
               <Grid item xs={12}>
-                {/* <FormControlLabel
-                  control={<CustomCheckbox value="termAll" id="all-check" checked={allCheck} onChange={allBtnEvent} />}
-                  label="전체동의"
-                />
-                <p /> */}
                 <Controller
                   name="term1"
                   control={control}
@@ -365,18 +410,6 @@ export default function SignUp() {
                     />
                   )}
                 />
-                {/* <FormControlLabel
-                  control={<CustomCheckbox value="term1" id="term1" checked={useCheck} onChange={useBtnEvent} />}
-                  label="이용약관 동의(필수)"
-                /> */}
-                {/* <FormControlLabel
-                  control={<CustomCheckbox value="term2" id="check2" checked={infoCheck} onChange={infoBtnEvent} />}
-                  label="개인정보 수집 및 이용 동의(필수)"
-                />
-                <FormControlLabel
-                  control={<CustomCheckbox value="term3" id="check3" checked={marketingCheck} onChange={marketingBtnEvent} />}
-                  label="마케팅약관 동의(선택)"
-                /> */}
               </Grid>
               { (errors.term1 || errors.term2) && (
                 <p style={{
