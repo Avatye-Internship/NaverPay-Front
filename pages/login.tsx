@@ -73,7 +73,7 @@ function LoginPage() {
               display: 'flex',
             }}
             >
-              <Image src={naverlogo} width={190} />
+              <Image priority src={naverlogo} width={190} alt="naver" />
             </Box>
             <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
               <Box component="form" onSubmit={handleSubmit(onSubmit)}>
@@ -133,25 +133,24 @@ function LoginPage() {
                 <Button type="submit" variant="contained" fullWidth sx={{ mt: 3, mb: 3, height: 50 }} style={{ fontSize: '18px', fontWeight: 'bolder', backgroundColor: '#03c75a' }}>로그인</Button>
               </Box>
 
-          </Paper>
-          <Box sx={{
-            display: 'flex',
-          }}
-          >
-            <Grid container justifyContent="center" alignItems="center" spacing={4}>
-              <Grid item>
-                <Link href="/find-pwd" underline="none" color="gray">비밀번호 찾기</Link>
-              </Grid>
-              <Grid item>
-                <Link href="/sign-up" underline="none" color="gray">회원가입</Link>
+            </Paper>
+            <Box sx={{
+              display: 'flex',
+            }}
+            >
+              <Grid container justifyContent="center" alignItems="center" spacing={4}>
+                <Grid item>
+                  <Link href="/find-pwd" underline="none" color="gray">비밀번호 찾기</Link>
+                </Grid>
+                <Grid item>
+                  <Link href="/sign-up" underline="none" color="gray">회원가입</Link>
+                </Grid>
               </Grid>
             </Box>
           </Box>
         </Container>
       </ThemeProvider>
-
     </div>
-
   );
 }
 

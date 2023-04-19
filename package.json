@@ -34,6 +34,7 @@
     "react-cookie": "^4.1.1",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.9",
+    "react-mui-swipeable": "^1.0.7",
     "react-router": "^5.3.4",
     "react-router-dom": "^5.3.4",
     "styled-components": "^5.3.9",

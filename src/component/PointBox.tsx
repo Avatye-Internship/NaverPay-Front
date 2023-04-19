@@ -39,7 +39,7 @@ function PointBox() {
       display="flex"
       justifyContent="center"
       alignItems="center"
-      marginTop='24px'
+      marginTop="24px"
       paddingLeft="24px"
       paddingRight="24px"
     >
