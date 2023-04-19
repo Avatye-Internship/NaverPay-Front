@@ -42,7 +42,7 @@ function ProductList(props: { data: any; cnt: any;}) {
       {Array.isArray(data) && data.map((item : any, index: number) => (
         <React.Fragment key={item.product_id}>
           { index < cnt && (
-            <ListItem onClick={() => router.push(`/product/ads/${item.product_id}`) }>
+            <ListItem onClick={() => router.push(`/product/ads/${item.product_id}`)}>
               <Avatar alt="이미지 설명" src={item.main_img} style={{ width: '70px', height: '70px' }} />
               <ListItemText primary={item.name} primaryTypographyProps={{ fontWeight: '700' }} secondary={item.description} />
               <ListItemText
