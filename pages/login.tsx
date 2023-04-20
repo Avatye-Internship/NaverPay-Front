@@ -1,6 +1,5 @@
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { useEffect, useState } from 'react';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -42,10 +41,9 @@ function LoginPage() {
     mode: 'onChange',
   });
   const router = useRouter();
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: { email: any; password: any; }) => {
     const response = await axios.post('/api/users/login/local', { email: data.email, pwd: data.password })
       .then((res) => res.data);
-        // setCookie('accessToken', res.data.data.token, { path: '/', secure: true, sameSite: 'none' });
     if (response.statusCode === 200) {
       alert('로그인에 성공했습니다.');
       router.push('/product');
