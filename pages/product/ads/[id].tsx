@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { styled } from '@mui/material/styles';
 import { useRouter } from 'next/router';
-import { UriCard, KookminCard, ShinhanCard } from '@/src/component/CardDetail';
+import { UriCard, KookminCard, ShinhanCard } from '../../../src/component/CardDetail';
 import DetailHeader from '../../../src/component/DetailHeader';
 import DetailFooter from '../../../src/component/DetailFooter';
 
@@ -74,12 +74,12 @@ function ProductDetailPage() {
       });
   }, []);
 
-  const onClickGetPoint = (e) => {
+  const onClickGetPoint = () => {
     axios.patch(`/api/product/ads/${id}/user-status`).then((res) => res.data)
       .then((res) => {
         if (res.statusCode === 200) {
           alert('참여완료 됐습니다.');
-          router.push('/main');
+          router.push('/product');
         }
       });
   };

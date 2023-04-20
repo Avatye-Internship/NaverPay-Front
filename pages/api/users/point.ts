@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import axios from 'axios';
-import { setHeaders } from '@/src/cookie';
+import { setHeaders } from '../../../src/cookie';
 
 const basicUrl = process.env.SERVER_API_URL;
 

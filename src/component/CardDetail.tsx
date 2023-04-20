@@ -53,7 +53,7 @@ function KookminCard(props: {data: any}) {
       <Typography whiteSpace="pre-line">
         혜택 ① : 2023년 4월1일 ~ 2023년 5월 15일 기간 동안 대상카드로 13만원 이상 결제 시 네이버페이 포인트 13만원 적립
         <br />
-        혜택 ② : 혜택① 조건 충족 대상자 중 2023년 4월1일 ~ 2023년 5월 15일 기간 동안 대상카드를 KB Pay에 신규 등록하고 KB Pay로 
+        혜택 ② : 혜택① 조건 충족 대상자 중 2023년 4월1일 ~ 2023년 5월 15일 기간 동안 대상카드를 KB Pay에 신규 등록하고 KB Pay로
         1만원 이상 이용 시 1만원 캐시백 추가 제공
       </Typography>
       <SubTitle>참여 대상</SubTitle>

@@ -4,14 +4,15 @@ import {
   AccordionDetails,
   AccordionSummary,
   Avatar,
-  Box, Button, Container, Divider, Grid, IconButton, List, ListItem, ListItemText, Paper, SwipeableDrawer, Typography,
+  Box,
+  Button, Container, Divider, Grid, IconButton, List, ListItem, ListItemText, Paper, Typography,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import axios from 'axios';
-import MainHeader from '@/src/component/MainHeader';
-import PointBox from '@/src/component/PointBox';
 import { useRouter } from 'next/router';
+import MainHeader from '../src/component/MainHeader';
+import PointBox from '../src/component/PointBox';
 import SwiperComponent from './swiper';
 
 const StyledAccordion = styled(Accordion)(() => ({
@@ -42,7 +43,7 @@ function ProductList(props: { data: any; cnt: any;}) {
       {Array.isArray(data) && data.map((item : any, index: number) => (
         <React.Fragment key={item.product_id}>
           { index < cnt && (
-            <ListItem onClick={() => router.push(`/product/ads/${item.product_id}`) }>
+            <ListItem onClick={() => router.push(`/product/ads/${item.product_id}`)}>
               <Avatar alt="이미지 설명" src={item.main_img} style={{ width: '70px', height: '70px' }} />
               <ListItemText primary={item.name} primaryTypographyProps={{ fontWeight: '700' }} secondary={item.description} />
               <ListItemText
@@ -62,7 +63,7 @@ function ProductList(props: { data: any; cnt: any;}) {
   );
 }
 
-function CustomAccordion(props) {
+function CustomAccordion(props: { Category: any; content1: any; content2: any; }) {
   const [data, setData] = React.useState([]);
   const [category, setCategory] = React.useState('all');
   const { Category, content1, content2 } = props;
@@ -83,7 +84,7 @@ function CustomAccordion(props) {
     }
   };
 
-  const handleCategoryChange = (event, value) => {
+  const handleCategoryChange = (event, value: string) => {
     setCategory(value);
     handleSubmit(value);
   };
@@ -110,7 +111,7 @@ export default function Product() {
   const [data, setData] = React.useState([]);
   // const [url, setUrl] = React.useState('');
   const [category, setCategory] = React.useState('all');
-  const [color, setColor] = React.useState('white');
+  const [color] = React.useState('white');
   // const history = useHistory();
 
   // React.useEffect(() => {
