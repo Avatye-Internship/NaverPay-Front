@@ -214,7 +214,7 @@ export default function SignUp() {
       .then((res) => res.data);
     if (response.statusCode === 201) {
       alert('회원가입에 성공했습니다.');
-      router.push('/');
+      router.push('/login');
     } else {
       alert('회원가입에 실패하였습니다.');
       router.push('/sign-up');

@@ -32,3 +32,9 @@
   flex: 1;
   background: #f7f5f5;
 }
+
+.whole_background {
+  width: 100%;
+  height: 100%;
+  background-color: #F4F6F9;
+}
