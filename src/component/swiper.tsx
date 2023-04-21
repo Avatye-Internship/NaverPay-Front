@@ -1,5 +1,3 @@
-import React, { useRef, useState } from 'react';
-// Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay } from 'swiper';
 
@@ -9,9 +7,12 @@ import 'swiper/css/navigation';
 import {
   Avatar, Box, Typography,
 } from '@mui/material';
+import { useRouter } from 'next/router';
+import React from 'react';
 
 export default function SwiperComponent(props: { data: any;}) {
   const { data } = props;
+  const router = useRouter();
   return (
     <div>
       <Swiper
@@ -25,8 +26,8 @@ export default function SwiperComponent(props: { data: any;}) {
         { data.map((item : any, index: number) => (
           <React.Fragment key={item.product_id}>
             { index < 2 && (
-            <SwiperSlide key={item.product_id} tag="li" style={{ backgroundColor: 'white', display: 'flex', justifyContent: 'center' }}>
-              <Box alignItems="center" style={{ display: 'flex', marginRight: '30px' }}>
+            <SwiperSlide onClick={() => router.push(`/product/ads/${item.product_id}`)} key={item.product_id} tag="li" style={{ backgroundColor: 'white', display: 'flex', justifyContent: 'center' }}>
+              <Box alignItems="center" style={{ display: 'flex', marginRight: '35px' }}>
                 <Avatar alt="이미지 설명" src={item.main_img} style={{ width: '70px', height: '70px' }} />
                 <Box justifyContent="center" alignItems="center" display="flex" flexDirection="column">
                   <Typography sx={{ fontWeight: 'bold', fontSize: '18px' }}>{item.name}</Typography>

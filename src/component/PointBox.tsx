@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import naverPayLogo from '../images/naver-pay-logo.png';
 
-const PointPaper = styled(Paper)(({ theme }) => ({
+const PointPaper = styled(Paper)(() => ({
   width: '265px',
   background: 'linear-gradient(134deg,#0dc56c -2%,#09aa9e 98%)',
   borderRadius: 16,
