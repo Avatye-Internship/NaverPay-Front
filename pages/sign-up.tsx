@@ -17,7 +17,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import axios from 'axios';
-import { FormHelperText, Toolbar } from '@mui/material';
+import { FormHelperText, Paper, Toolbar } from '@mui/material';
 
 // 테마 색상을 변경
 const theme = createTheme({
@@ -343,223 +343,226 @@ export default function SignUp() {
             }}
           >
             <Image src="/MicrosoftTeams-image.png" priority alt="naver" width={165} height={35} />
-            <Box component="form" onSubmit={handleSubmit} sx={{ mt: 5 }}>
-              <Grid container spacing={3} sx={{ mt: -1 }}>
-                <div>
-                  <Grid container spacing={2} sx={{ mt: -1 }} onSubmit={clickCodeSendBtn}>
-                    <Grid item xs={8} style={{ paddingLeft: '40px' }}>
-                      <TextField
-                        onBlur={onEmailHandler}
-                        onChange={onEmailHandler}
-                        required
-                        fullWidth
-                        autoFocus
-                        id="email"
-                        label="이메일"
-                        error={emailValid !== true}
-                        helperText={emailValid !== true ? emailError : ''}
-                        disabled={emailCodeValid && emailCode !== ''}
-                      />
+            <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
+              <Box component="form" onSubmit={handleSubmit} sx={{ mt: 5 }}>
+                <Grid container spacing={3} sx={{ mt: -1 }}>
+                  <div>
+                    <Grid container spacing={2} sx={{ mt: -1 }} onSubmit={clickCodeSendBtn}>
+                      <Grid item xs={8} style={{ paddingLeft: '40px' }}>
+                        <TextField
+                          onBlur={onEmailHandler}
+                          onChange={onEmailHandler}
+                          required
+                          fullWidth
+                          autoFocus
+                          id="email"
+                          label="이메일"
+                          error={emailValid !== true}
+                          helperText={emailValid !== true ? emailError : ''}
+                          disabled={emailCodeValid && emailCode !== ''}
+                        />
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Button disabled={emailCodeValid && emailCode !== ''} type="button" onClick={clickCodeSendBtn} variant="contained" color="success" fullWidth sx={{ height: 56 }} style={{ fontSize: '14px', fontWeight: 'bolder', backgroundColor: '#03c75a' }}>인증번호 받기</Button>
+                      </Grid>
+                      <Grid item xs={12} style={{ paddingLeft: '40px' }}>
+                        <TextField
+                          error={emailCodeValid !== true}
+                          helperText={emailCodeValid !== true ? emailCodeErr : ''}
+                          fullWidth
+                          onChange={onEmailCodeHandler}
+                          onBlur={onEmailCodeHandler}
+                          required
+                          name="email code"
+                          placeholder="인증코드 입력"
+                          disabled={emailCodeValid && emailCode !== ''}
+                        />
+                      </Grid>
                     </Grid>
-                    <Grid item xs={4}>
-                      <Button disabled={emailCodeValid && emailCode !== ''} type="button" onClick={clickCodeSendBtn} variant="contained" color="success" fullWidth sx={{ height: 56 }} style={{ fontSize: '14px', fontWeight: 'bolder', backgroundColor: '#03c75a' }}>인증번호 받기</Button>
-                    </Grid>
-                    <Grid item xs={12} style={{ paddingLeft: '40px' }}>
-                      <TextField
-                        error={emailCodeValid !== true}
-                        helperText={emailCodeValid !== true ? emailCodeErr : ''}
-                        fullWidth
-                        onChange={onEmailCodeHandler}
-                        onBlur={onEmailCodeHandler}
-                        required
-                        name="email code"
-                        placeholder="인증코드 입력"
-                        disabled={emailCodeValid && emailCode !== ''}
-                      />
-                    </Grid>
+                  </div>
+                  <Grid item xs={12}>
+                    <TextField
+                      onBlur={onPwdHandler}
+                      onChange={onPwdHandler}
+                      required
+                      fullWidth
+                      autoFocus
+                      id="pwd"
+                      label="비밀번호 (숫자+영문자 8자리 이상 15자리 이하)"
+                      name="pwd"
+                      type="password"
+                      error={pwdValid !== true}
+                      helperText={pwdValid !== true ? pwdError : ''}
+                    />
                   </Grid>
-                </div>
-                <Grid item xs={12}>
-                  <TextField
-                    onBlur={onPwdHandler}
-                    onChange={onPwdHandler}
-                    required
-                    fullWidth
-                    autoFocus
-                    id="pwd"
-                    label="비밀번호 (숫자+영문자 8자리 이상 15자리 이하)"
-                    name="pwd"
-                    type="password"
-                    error={pwdValid !== true}
-                    helperText={pwdValid !== true ? pwdError : ''}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    onBlur={onPwdConfirmHandler}
-                    onChange={onPwdConfirmHandler}
-                    required
-                    fullWidth
-                    autoFocus
-                    id="checkPwd"
-                    label="비밀번호 재확인"
-                    name="checkPwd"
-                    type="password"
-                    error={repwdValid !== true}
-                    helperText={repwdValid !== true ? repwdError : ''}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    onBlur={onNameHandler}
-                    onChange={onNameHandler}
-                    required
-                    fullWidth
-                    autoFocus
-                    name="name"
-                    label="이름"
-                    type="name"
-                    id="name"
-                    error={nameValid !== true}
-                    helperText={nameValid !== true ? nameError : ''}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    onBlur={onBirthHandler}
-                    onChange={onBirthHandler}
-                    fullWidth
-                    autoFocus
-                    name="birth"
-                    label="생년월일"
-                    type="birth"
-                    id="birth"
-                    error={birthValid !== true}
-                    helperText={birthValid !== true ? birthError : ''}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControl fullWidth>
-                    <InputLabel id="gender-label">성별</InputLabel>
-                    <Select labelId="gender-label" label="성별" placeholder="성별" defaultValue="" onChange={onGenderHandler}>
-                      <MenuItem value="">성별</MenuItem>
-                      <MenuItem value="남성">남성</MenuItem>
-                      <MenuItem value="여성">여성</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    onBlur={onNicknameHandler}
-                    onChange={onNicknameHandler}
-                    required
-                    fullWidth
-                    autoFocus
-                    name="nickname"
-                    label="닉네임"
-                    type="nickname"
-                    id="nickname"
-                    error={nicknameValid !== true}
-                    helperText={nicknameValid !== true ? nicknameError : ''}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControlLabel
-                    control={<CustomCheckbox value="termAll" id="all-check" checked={allCheck} onChange={allBtnEvent} />}
-                    label="전체동의"
-                  />
-                  <p />
-                  <FormControlLabel
-                    control={<CustomCheckbox value="term1" id="check1" checked={useCheck} onChange={useBtnEvent} />}
-                    label="이용약관 동의(필수)"
-                  />
-                  <Box sx={{
-                    overflowY: 'scroll', height: 100, backgroundColor: '#F4F6F9', padding: '5', border: '1px solid #dadada',
-                  }}
-                  >
-                    <div style={{ margin: '15px' }}>
-                      <Typography paragraph fontSize={13} color="#666" fontWeight={700}>
-                        여러분을 환영합니다.
-                      </Typography>
-                      <Typography paragraph fontSize={13} color="#666">
-                        네이버 서비스 및 제품(이하 ‘서비스’)을 이용해 주셔서 감사합니다.
-                        본 약관은 다양한 네이버 서비스의 이용과 관련하여 네이버 서비스를 제공하는
-                        네이버 주식회사(이하 ‘네이버’)와 이를 이용하는 네이버 서비스 회원(이하 ‘회원’) 또는 비회원과의 관계를 설명하며,
-                        아울러 여러분의 네이버 서비스 이용에 도움이 될 수 있는 유익한 정보를 포함하고 있습니다.
-                        네이버 서비스를 이용하시거나 네이버 서비스 회원으로 가입하실 경우 여러분은 본 약관 및 관련 운영 정책을 확인하거나
-                        동의하게 되므로, 잠시 시간을 내시어 주의 깊게 살펴봐 주시기 바랍니다.
-                      </Typography>
-                    </div>
-                  </Box>
-                  <FormControlLabel
-                    control={<CustomCheckbox value="term2" id="check2" checked={infoCheck} onChange={infoBtnEvent} />}
-                    label="개인정보 수집 및 이용 동의(필수)"
-                  />
-                  <Box sx={{
-                    overflowY: 'scroll', height: 100, backgroundColor: '#F4F6F9', padding: '5', border: '1px solid #dadada',
-                  }}
-                  >
-                    <div style={{ margin: '15px' }}>
-                      <Typography paragraph fontSize={13} color="#666" fontWeight={700}>
-                        개인정보보호법에 따라 네이버에 회원가입 신청하시는 분께 수집하는 개인정보의 항목, 개인정보의 수집 및 이용목적,
-                        개인정보의 보유 및 이용기간, 동의 거부권 및 동의 거부 시 불이익에 관한 사항을 안내 드리오니
-                        자세히 읽은 후 동의하여 주시기 바랍니다.
-                      </Typography>
-                      <Typography paragraph fontSize={13} color="#666">
-                        1. 수집하는 개인정보
-                        이용자는 회원가입을 하지 않아도 정보 검색, 뉴스 보기 등 대부분의 네이버 서비스를 회원과 동일하게 이용할 수 있습니다. 이용자가 메일,
-                        캘린더, 카페, 블로그 등과 같이 개인화 혹은 회원제 서비스를 이용하기 위해 회원가입을 할 경우,
-                        네이버는 서비스 이용을 위해 필요한 최소한의 개인정보를 수집합니다.
+                  <Grid item xs={12}>
+                    <TextField
+                      onBlur={onPwdConfirmHandler}
+                      onChange={onPwdConfirmHandler}
+                      required
+                      fullWidth
+                      autoFocus
+                      id="checkPwd"
+                      label="비밀번호 재확인"
+                      name="checkPwd"
+                      type="password"
+                      error={repwdValid !== true}
+                      helperText={repwdValid !== true ? repwdError : ''}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      onBlur={onNameHandler}
+                      onChange={onNameHandler}
+                      required
+                      fullWidth
+                      autoFocus
+                      name="name"
+                      label="이름"
+                      type="name"
+                      id="name"
+                      error={nameValid !== true}
+                      helperText={nameValid !== true ? nameError : ''}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      onBlur={onBirthHandler}
+                      onChange={onBirthHandler}
+                      fullWidth
+                      autoFocus
+                      name="birth"
+                      label="생년월일"
+                      type="birth"
+                      id="birth"
+                      error={birthValid !== true}
+                      helperText={birthValid !== true ? birthError : ''}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControl fullWidth>
+                      <InputLabel id="gender-label">성별</InputLabel>
+                      <Select labelId="gender-label" label="성별" placeholder="성별" defaultValue="" onChange={onGenderHandler}>
+                        <MenuItem value="">성별</MenuItem>
+                        <MenuItem value="남성">남성</MenuItem>
+                        <MenuItem value="여성">여성</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      onBlur={onNicknameHandler}
+                      onChange={onNicknameHandler}
+                      required
+                      fullWidth
+                      autoFocus
+                      name="nickname"
+                      label="닉네임"
+                      type="nickname"
+                      id="nickname"
+                      error={nicknameValid !== true}
+                      helperText={nicknameValid !== true ? nicknameError : ''}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControlLabel
+                      control={<CustomCheckbox value="termAll" id="all-check" checked={allCheck} onChange={allBtnEvent} />}
+                      label="전체동의"
+                    />
+                    <p />
+                    <FormControlLabel
+                      control={<CustomCheckbox value="term1" id="check1" checked={useCheck} onChange={useBtnEvent} />}
+                      label="이용약관 동의(필수)"
+                    />
+                    <Box sx={{
+                      overflowY: 'scroll', height: 100, backgroundColor: '#F4F6F9', padding: '5', border: '1px solid #dadada',
+                    }}
+                    >
+                      <div style={{ margin: '15px' }}>
+                        <Typography paragraph fontSize={13} color="#666" fontWeight={700}>
+                          여러분을 환영합니다.
+                        </Typography>
+                        <Typography paragraph fontSize={13} color="#666">
+                          네이버 서비스 및 제품(이하 ‘서비스’)을 이용해 주셔서 감사합니다.
+                          본 약관은 다양한 네이버 서비스의 이용과 관련하여 네이버 서비스를 제공하는
+                          네이버 주식회사(이하 ‘네이버’)와 이를 이용하는 네이버 서비스 회원(이하 ‘회원’) 또는 비회원과의 관계를 설명하며,
+                          아울러 여러분의 네이버 서비스 이용에 도움이 될 수 있는 유익한 정보를 포함하고 있습니다.
+                          네이버 서비스를 이용하시거나 네이버 서비스 회원으로 가입하실 경우 여러분은 본 약관 및 관련 운영 정책을 확인하거나
+                          동의하게 되므로, 잠시 시간을 내시어 주의 깊게 살펴봐 주시기 바랍니다.
+                        </Typography>
+                      </div>
+                    </Box>
+                    <FormControlLabel
+                      control={<CustomCheckbox value="term2" id="check2" checked={infoCheck} onChange={infoBtnEvent} />}
+                      label="개인정보 수집 및 이용 동의(필수)"
+                    />
+                    <Box sx={{
+                      overflowY: 'scroll', height: 100, backgroundColor: '#F4F6F9', padding: '5', border: '1px solid #dadada',
+                    }}
+                    >
+                      <div style={{ margin: '15px' }}>
+                        <Typography paragraph fontSize={13} color="#666" fontWeight={700}>
+                          개인정보보호법에 따라 네이버에 회원가입 신청하시는 분께 수집하는 개인정보의 항목, 개인정보의 수집 및 이용목적,
+                          개인정보의 보유 및 이용기간, 동의 거부권 및 동의 거부 시 불이익에 관한 사항을 안내 드리오니
+                          자세히 읽은 후 동의하여 주시기 바랍니다.
+                        </Typography>
+                        <Typography paragraph fontSize={13} color="#666">
+                          1. 수집하는 개인정보
+                          이용자는 회원가입을 하지 않아도 정보 검색, 뉴스 보기 등 대부분의 네이버 서비스를 회원과 동일하게 이용할 수 있습니다.
+                          이용자가 메일, 캘린더, 카페, 블로그 등과 같이 개인화 혹은 회원제 서비스를 이용하기 위해 회원가입을 할 경우,
+                          네이버는 서비스 이용을 위해 필요한 최소한의 개인정보를 수집합니다.
 
-                        회원가입 시점에 네이버가 이용자로부터 수집하는 개인정보는 아래와 같습니다.
-                        - 회원 가입 시 필수항목으로 아이디, 비밀번호, 이름, 생년월일, 성별, 휴대전화번호를, 선택항목으로 본인확인 이메일주소를 수집합니다.
-                        단, 비밀번호 없이 회원 가입 시에는 필수항목으로 아이디, 이름, 생년월일, 휴대전화번호를, 선택항목으로 비밀번호를 수집합니다.
-                        만약 이용자가 입력하는 생년월일이 만14세 미만 아동일 경우에는
-                        법정대리인 정보(법정대리인의 이름, 생년월일, 성별, 중복가입확인정보(DI), 휴대전화번호)를추가로 수집합니다.
-                        - 단체아이디로 회원가입 시 단체아이디, 비밀번호, 단체이름, 이메일주소, 휴대전화번호를 필수항목으로 수집합니다.
-                        그리고 단체 대표자명을 선택항목으로 수집합니다.
-                      </Typography>
-                    </div>
-                  </Box>
-                  <FormControlLabel
-                    control={<CustomCheckbox value="term3" id="check3" checked={marketingCheck} onChange={marketingBtnEvent} />}
-                    label="마케팅약관 동의(선택)"
-                  />
-                  <Box sx={{
-                    overflowY: 'scroll', height: 100, backgroundColor: '#F4F6F9', padding: '5', border: '1px solid #dadada',
-                  }}
-                  >
-                    <div style={{ margin: '15px' }}>
-                      <Typography paragraph fontSize={13} color="#666" fontWeight={700}>
-                        위치기반서비스 이용약관에 동의하시면, 위치를 활용한 광고 정보 수신 등을 포함하는 네이버 위치기반 서비스를 이용할 수 있습니다.
-                      </Typography>
-                      <Typography paragraph fontSize={13} color="#666">
-                        제 1 조 (목적)
-                        이 약관은 네이버 주식회사 (이하 “회사”)가 제공하는 위치기반서비스와 관련하여 회사와
-                        개인위치정보주체와의 권리, 의무 및 책임사항, 기타 필요한 사항을 규정함을 목적으로 합니다.
-                        제 2 조 (약관 외 준칙)
-                        이 약관에 명시되지 않은 사항은 위치정보의 보호 및 이용 등에 관한 법률, 개인정보보호법, 정보통신망 이용촉진 및
-                        정보보호 등에 관한 법률, 전기통신기본법, 전기통신사업법 등 관계법령과 회사의 이용약관 및
-                        개인정보처리방침, 회사가 별도로 정한 지침 등에 의합니다.
-                      </Typography>
-                    </div>
-                  </Box>
-                  <FormHelperText style={{ color: 'red', fontSize: '13px' }}>{termError}</FormHelperText>
+                          회원가입 시점에 네이버가 이용자로부터 수집하는 개인정보는 아래와 같습니다.
+                          - 회원 가입 시 필수항목으로 아이디, 비밀번호, 이름, 생년월일, 성별, 휴대전화번호를,
+                          선택항목으로 본인확인 이메일주소를 수집합니다.
+                          단, 비밀번호 없이 회원 가입 시에는 필수항목으로 아이디, 이름, 생년월일, 휴대전화번호를, 선택항목으로 비밀번호를 수집합니다.
+                          만약 이용자가 입력하는 생년월일이 만14세 미만 아동일 경우에는
+                          법정대리인 정보(법정대리인의 이름, 생년월일, 성별, 중복가입확인정보(DI), 휴대전화번호)를추가로 수집합니다.
+                          - 단체아이디로 회원가입 시 단체아이디, 비밀번호, 단체이름, 이메일주소, 휴대전화번호를 필수항목으로 수집합니다.
+                          그리고 단체 대표자명을 선택항목으로 수집합니다.
+                        </Typography>
+                      </div>
+                    </Box>
+                    <FormControlLabel
+                      control={<CustomCheckbox value="term3" id="check3" checked={marketingCheck} onChange={marketingBtnEvent} />}
+                      label="마케팅약관 동의(선택)"
+                    />
+                    <Box sx={{
+                      overflowY: 'scroll', height: 100, backgroundColor: '#F4F6F9', padding: '5', border: '1px solid #dadada',
+                    }}
+                    >
+                      <div style={{ margin: '15px' }}>
+                        <Typography paragraph fontSize={13} color="#666" fontWeight={700}>
+                          위치기반서비스 이용약관에 동의하시면, 위치를 활용한 광고 정보 수신 등을 포함하는 네이버 위치기반 서비스를 이용할 수 있습니다.
+                        </Typography>
+                        <Typography paragraph fontSize={13} color="#666">
+                          제 1 조 (목적)
+                          이 약관은 네이버 주식회사 (이하 “회사”)가 제공하는 위치기반서비스와 관련하여 회사와
+                          개인위치정보주체와의 권리, 의무 및 책임사항, 기타 필요한 사항을 규정함을 목적으로 합니다.
+                          제 2 조 (약관 외 준칙)
+                          이 약관에 명시되지 않은 사항은 위치정보의 보호 및 이용 등에 관한 법률, 개인정보보호법, 정보통신망 이용촉진 및
+                          정보보호 등에 관한 법률, 전기통신기본법, 전기통신사업법 등 관계법령과 회사의 이용약관 및
+                          개인정보처리방침, 회사가 별도로 정한 지침 등에 의합니다.
+                        </Typography>
+                      </div>
+                    </Box>
+                    <FormHelperText style={{ color: 'red', fontSize: '13px' }}>{termError}</FormHelperText>
+                  </Grid>
                 </Grid>
-              </Grid>
-              <Button
-                type="submit"
-                fullWidth
-                color="success"
-                variant="contained"
-                size="large"
-                sx={{ mt: 3, mb: 2 }}
-                style={{ fontSize: '18px', fontWeight: 'bolder', backgroundColor: '#03c75a' }}
-              >
-                가입하기
-              </Button>
-              <FormHelperText style={{ color: 'red', fontSize: '13px' }}>{registerError}</FormHelperText>
-            </Box>
+                <Button
+                  type="submit"
+                  fullWidth
+                  color="success"
+                  variant="contained"
+                  size="large"
+                  sx={{ mt: 3, mb: 2 }}
+                  style={{ fontSize: '18px', fontWeight: 'bolder', backgroundColor: '#03c75a' }}
+                >
+                  가입하기
+                </Button>
+                <FormHelperText style={{ color: 'red', fontSize: '13px' }}>{registerError}</FormHelperText>
+              </Box>
+            </Paper>
           </Box>
           <Copyright sx={{ mt: 5 }} />
         </Container>
