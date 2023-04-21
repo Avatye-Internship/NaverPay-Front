@@ -29,17 +29,23 @@ export default function SwiperComponent(props: { data: any;}) {
             <SwiperSlide onClick={() => router.push(`/product/ads/${item.product_id}`)} key={item.product_id} tag="li" style={{ backgroundColor: 'white', display: 'flex', justifyContent: 'center' }}>
               <Box alignItems="center" style={{ display: 'flex', marginRight: '35px' }}>
                 <Avatar alt="이미지 설명" src={item.main_img} style={{ width: '70px', height: '70px' }} />
-                <Box textAlign="center">
+                <Box justifyContent="center" alignItems="center" display="flex" flexDirection="column">
                   <Typography sx={{ fontWeight: 'bold', fontSize: '18px' }}>{item.name}</Typography>
                   <Typography sx={{ fontSize: '15px' }}>{item.description}</Typography>
-                  <Typography
-                    sx={{ fontWeight: 'bold', color: '#09b65a', fontSize: '16px' }}
-                    style={{
-                      borderRadius: '16px', backgroundColor: '#e3f6ed', color: '#09aa5c', maxWidth: '110px', minHeight: '25px', marginLeft: '12px',
+                  <Box
+                    marginTop="10px"
+                    sx={{
+                      borderRadius: '16px', backgroundColor: '#e3f6ed', color: '#09aa5c', maxWidth: '110px', minHeight: '25px',
                     }}
                   >
-                    {`${item.product_point}원 적립`}
-                  </Typography>
+                    <Typography
+                      marginX="12px"
+                      sx={{ fontWeight: 'bold', color: '#09b65a', fontSize: '16px' }}
+                    >
+                      {item.product_point}
+                      원 적립
+                    </Typography>
+                  </Box>
                 </Box>
               </Box>
             </SwiperSlide>

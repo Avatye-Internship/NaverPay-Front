@@ -12,6 +12,7 @@ import DetailFooter from '../../../src/component/DetailFooter';
 
 const GetPointButton = styled(Button)(() => ({
   marginTop: '80px',
+  marginBottom: '40px',
   fontSize: '26px',
   fontWeight: 'bolder',
   backgroundColor: '#09b65a',
@@ -21,6 +22,7 @@ const GetPointButton = styled(Button)(() => ({
 const ApplyEventButton = styled(Button)(() => ({
   width: '270px',
   marginTop: '60px',
+  marginBottom: '50px',
   fontSize: '20px',
   fontWeight: 'bold',
   backgroundColor: '#ff406b',
@@ -98,7 +100,7 @@ function ProductDetailPage() {
     <Box display="flex" flexDirection="column" minHeight="100vh">
       <DetailHeader />
       {/* 메인 광고 박스 */}
-      <Box display="flex" flex={1}>
+      <Box display="flex" flex={1} sx={{backgroundColor: 'white'}}>
         <Grid container flex={1} direction="column" alignItems="center" width={boxSize}>
           <Grid>
             <img alt="product_img" width={boxSize} src={data.detail_img} />
