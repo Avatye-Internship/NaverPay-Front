@@ -16,6 +16,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import naverlogo from '../src/images/naver-logo.png';
+import { setToken } from '@/src/TokenManager';
 // import { setCookie } from '../src/cookie';
 
 // 테마 색상을 변경
@@ -41,11 +42,13 @@ function LoginPage() {
     mode: 'onChange',
   });
   const router = useRouter();
+
   const onSubmit = async (data: { email: any; password: any; }) => {
     const response = await axios.post('/api/users/login/local', { email: data.email, pwd: data.password })
       .then((res) => res.data);
     if (response.statusCode === 200) {
       alert('로그인에 성공했습니다.');
+      console.log(response);
       router.push('/product');
     } else {
       alert('등록되지 않은 회원입니다.');
