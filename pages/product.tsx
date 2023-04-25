@@ -13,7 +13,7 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import MainHeader from '../src/component/MainHeader';
 import PointBox from '../src/component/PointBox';
-import SwiperComponent from './swiper';
+import SwiperComponent from '../src/component/swiper';
 
 const StyledAccordion = styled(Accordion)(() => ({
   paddingTop: '5px',
