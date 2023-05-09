@@ -17,7 +17,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import axios from 'axios';
-import { FormHelperText, Paper, Toolbar } from '@mui/material';
+import { FormHelperText, Paper } from '@mui/material';
 
 // 테마 색상을 변경
 const theme = createTheme({

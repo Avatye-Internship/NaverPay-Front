@@ -16,7 +16,6 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import naverlogo from '../src/images/naver-logo.png';
-import { setToken } from '@/src/TokenManager';
 // import { setCookie } from '../src/cookie';
 
 // 테마 색상을 변경
@@ -138,6 +137,9 @@ function LoginPage() {
             }}
             >
               <Grid container justifyContent="center" alignItems="center" spacing={4}>
+                <Button onClick={() => router.push('/api/login')}>
+                  MS
+                </Button>
                 <Grid item>
                   <Link href="/find-pwd" underline="none" color="gray">비밀번호 찾기</Link>
                 </Grid>
